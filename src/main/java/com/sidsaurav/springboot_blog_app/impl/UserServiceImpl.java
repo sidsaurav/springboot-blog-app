@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.sidsaurav.springboot_blog_app.entity.User;
 import com.sidsaurav.springboot_blog_app.payloads.UserDto;
 import com.sidsaurav.springboot_blog_app.repositories.UserRepo;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
