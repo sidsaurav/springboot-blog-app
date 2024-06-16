@@ -2,6 +2,7 @@ package com.sidsaurav.springboot_blog_app.services;
 
 import java.util.List;
 
+import com.sidsaurav.springboot_blog_app.payloads.ApiResponse;
 import com.sidsaurav.springboot_blog_app.payloads.UserDto;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +13,10 @@ public interface UserService {
 
     UserDto getUserById(long userId);
 
-    UserDto createUser(UserDto user);
+    ApiResponse createUser(UserDto user);
 
-    UserDto updateUser(UserDto user, long userId);
+    ApiResponse updateUser(UserDto user, long userId);
 
-    void deleteUser(long userId);
+    ApiResponse deleteUser(long userId);
 
 }

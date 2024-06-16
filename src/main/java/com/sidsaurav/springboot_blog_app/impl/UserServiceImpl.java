@@ -1,5 +1,6 @@
 package com.sidsaurav.springboot_blog_app.impl;
 
+import com.sidsaurav.springboot_blog_app.payloads.ApiResponse;
 import com.sidsaurav.springboot_blog_app.services.UserService;
 
 import java.util.List;
@@ -29,19 +30,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto createUser(UserDto user) {
+    public ApiResponse createUser(UserDto user) {
         User newUser = new User();
         newUser.setId(user.getId());
         newUser.setName(user.getName());
         newUser.setEmail(user.getEmail());
         newUser.setPassword(user.getPassword());
         newUser.setAbout(user.getAbout());
-        newUser = userRepo.save(newUser);
-        return convertToDto(newUser);
+        userRepo.save(newUser);
+        return new ApiResponse("User created successfully", true);
     }
 
     @Override
-    public UserDto updateUser(UserDto user, long userId) {
+    public ApiResponse updateUser(UserDto user, long userId) {
         var userToUpdate = userRepo.findById(userId).orElse(null);
         if (userToUpdate == null) {
             return null;
@@ -53,12 +54,13 @@ public class UserServiceImpl implements UserService {
         userToUpdate.setAbout(user.getAbout());
 
         userRepo.save(userToUpdate);
-        return convertToDto(userToUpdate);
+        return new ApiResponse("User updated successfully", true);
     }
 
     @Override
-    public void deleteUser(long userId) {
+    public ApiResponse deleteUser(long userId) {
         userRepo.deleteById(userId);
+        return new ApiResponse("User deleted successfully", true);
     }
 
     private UserDto convertToDto(User user) {

@@ -1,5 +1,6 @@
 package com.sidsaurav.springboot_blog_app.controllers;
 
+import com.sidsaurav.springboot_blog_app.payloads.ApiResponse;
 import com.sidsaurav.springboot_blog_app.payloads.UserDto;
 import com.sidsaurav.springboot_blog_app.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path="/api/user")
@@ -29,21 +32,22 @@ public class UserController {
     }
 
     @PostMapping
-    ResponseEntity<UserDto> createUser(@RequestBody UserDto user){
-        var userDto = userService.createUser(user);
-        return new ResponseEntity<>(userDto, HttpStatus.CREATED);
+    ResponseEntity<ApiResponse> createUser(@RequestBody UserDto user){
+        var res = userService.createUser(user);
+        return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
 
     @PutMapping(path="/{id}")
     ResponseEntity<?> updateUser(@PathVariable long id, @RequestBody UserDto user){
-        var userToBeUpdated = userService.updateUser(user, id);
-        return new ResponseEntity<>(userToBeUpdated, HttpStatus.ACCEPTED);
+        var res = userService.updateUser(user, id);
+        return new ResponseEntity<>(res, HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping(path="/{id}")
-    void deleteUser(@PathVariable long id){
-        userService.deleteUser(id);
+    ResponseEntity<?> deleteUser(@PathVariable long id){
+        var res = userService.deleteUser(id);
+//        return new ResponseEntity<>(Map.of("message","User deleted successfully", "anotherMessage","for testing purpose"), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(res, HttpStatus.ACCEPTED);
     }
-
 
 }
